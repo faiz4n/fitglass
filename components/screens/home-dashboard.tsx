@@ -19,9 +19,10 @@ export function HomeDashboard() {
   const hiit = todayLog?.hiit || false
   const score = todayLog?.score || 0
 
-  // Calculate burn and deficit
-  const totalBurn = profile.tdee + steps * 0.035 + (hiit ? 60 : 0)
-  const deficit = totalBurn - calories
+  // Use scientific TDEE values from the log (calculated via Mifflin-St Jeor)
+  const totalBurn = todayLog?.tdee || 0
+  const deficit = todayLog?.deficit || 0
+  const fatLostGrams = todayLog?.fatLostGrams || 0
   const isDeficit = deficit > 0
 
   const calorieScore =
@@ -244,6 +245,12 @@ export function HomeDashboard() {
             <div>
               <p className="text-sm text-muted-foreground mb-1">Total Fat Lost</p>
               <p className="text-2xl font-bold text-success">{totalFatLost.toFixed(2)} kg</p>
+            </div>
+            <div className="text-center">
+              <p className="text-sm text-muted-foreground mb-1">Today (est.)</p>
+              <p className={cn("text-xl font-semibold", isDeficit ? "text-success" : "text-muted-foreground")}>
+                {isDeficit ? `~${fatLostGrams}g` : "0g"}
+              </p>
             </div>
             <div className="text-right">
               <p className="text-sm text-muted-foreground mb-1">Current Fat</p>

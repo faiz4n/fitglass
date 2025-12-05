@@ -14,6 +14,7 @@ import {
   subscribeToProfile,
   subscribeToSettings,
 } from "./firestore-sync"
+import { calculateDailyFatLoss } from "./fitness-calculations"
 
 export type AccentTheme = "teal" | "blue" | "rose" | "orange"
 export type ColorMode = "light" | "dark"
@@ -26,6 +27,10 @@ export interface DailyLog {
   hiit: boolean
   score: number
   fatLost: number
+  // New fields for scientific calculations
+  deficit: number
+  fatLostGrams: number
+  tdee: number
 }
 
 export interface UserProfile {
@@ -126,10 +131,23 @@ const calculateScore = (log: Partial<DailyLog>, profile: UserProfile): number =>
   return Math.min(100, score)
 }
 
-const calculateFatLost = (log: Partial<DailyLog>, profile: UserProfile): number => {
-  const totalBurn = profile.tdee + (log.steps || 0) * 0.035 + (log.hiit ? 60 : 0)
-  const deficit = totalBurn - (log.calories || 0)
-  return Math.max(0, deficit / 7700)
+const calculateFatLost = (log: Partial<DailyLog>, profile: UserProfile): { fatLost: number; deficit: number; fatLostGrams: number; tdee: number } => {
+  const result = calculateDailyFatLoss({
+    weightKg: profile.weight,
+    heightCm: profile.height,
+    ageYears: profile.age,
+    sex: profile.gender,
+    steps: log.steps || 0,
+    didHIIT: log.hiit || false,
+    caloriesConsumed: log.calories || 0,
+  })
+
+  return {
+    fatLost: result.deficitResult.fatLostKg,
+    deficit: result.deficitResult.deficit,
+    fatLostGrams: result.deficitResult.fatLostGrams,
+    tdee: result.tdeeResult.tdee,
+  }
 }
 
 export const useFitnessStore = create<FitnessState>()(
@@ -191,10 +209,17 @@ export const useFitnessStore = create<FitnessState>()(
           hiit: partialLog.hiit ?? existingLog?.hiit ?? false,
           score: 0,
           fatLost: 0,
+          deficit: 0,
+          fatLostGrams: 0,
+          tdee: 0,
         }
 
         updatedLog.score = calculateScore(updatedLog, state.profile)
-        updatedLog.fatLost = calculateFatLost(updatedLog, state.profile)
+        const fatResults = calculateFatLost(updatedLog, state.profile)
+        updatedLog.fatLost = fatResults.fatLost
+        updatedLog.deficit = fatResults.deficit
+        updatedLog.fatLostGrams = fatResults.fatLostGrams
+        updatedLog.tdee = fatResults.tdee
 
         set({
           logs: [...state.logs.filter((l) => l.date !== today), updatedLog],
@@ -218,10 +243,17 @@ export const useFitnessStore = create<FitnessState>()(
           hiit: partialLog.hiit ?? existingLog?.hiit ?? false,
           score: 0,
           fatLost: 0,
+          deficit: 0,
+          fatLostGrams: 0,
+          tdee: 0,
         }
 
         updatedLog.score = calculateScore(updatedLog, state.profile)
-        updatedLog.fatLost = calculateFatLost(updatedLog, state.profile)
+        const fatResults = calculateFatLost(updatedLog, state.profile)
+        updatedLog.fatLost = fatResults.fatLost
+        updatedLog.deficit = fatResults.deficit
+        updatedLog.fatLostGrams = fatResults.fatLostGrams
+        updatedLog.tdee = fatResults.tdee
 
         set({
           logs: [...state.logs.filter((l) => l.date !== date), updatedLog],
