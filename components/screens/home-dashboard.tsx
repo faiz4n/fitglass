@@ -6,6 +6,7 @@ import { ProgressBar } from "@/components/ui/progress-bar"
 import { useFitnessStore } from "@/lib/fitness-store"
 import { Flame, Drumstick, Footprints, Zap, Trophy, TrendingDown, TrendingUp, Route } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { AppHeader } from "@/components/ui/app-header"
 
 export function HomeDashboard() {
   const { profile, getTodayLog, getTotalFatLost, setCurrentView } = useFitnessStore()
@@ -35,14 +36,16 @@ export function HomeDashboard() {
   return (
     <div className="min-h-screen pb-24 lg:pb-8 relative z-10">
       {/* Header */}
-      <header className="px-5 pt-12 lg:pt-8 pb-6">
-        <p className="text-muted-foreground text-sm">{currentDate}</p>
-        <h1 className="text-2xl font-bold mt-1">
-          Welcome, <span className="text-primary">{profile.name}</span>
-        </h1>
-      </header>
+      <AppHeader
+        title={
+          <span>
+            Welcome, <span className="text-primary">{profile.name}</span>
+          </span>
+        }
+        subtitle={currentDate}
+      />
 
-      <div className="px-5 space-y-4 lg:grid lg:grid-cols-2 lg:gap-4 lg:space-y-0">
+      <div className="px-4 space-y-3 lg:grid lg:grid-cols-2 lg:gap-4 lg:space-y-0">
         <GlassCard
           variant="highlight"
           className="animate-slide-up cursor-pointer hover:scale-[1.02] transition-transform lg:col-span-2"
@@ -51,7 +54,7 @@ export function HomeDashboard() {
           <div className="flex items-center justify-between">
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-3">
-                <div className="p-2 rounded-xl bg-primary/20 border border-primary/30">
+                <div className="p-1.5 rounded-xl bg-primary/20 border border-primary/30">
                   <Flame className="w-5 h-5 text-primary" />
                 </div>
                 <span className="text-sm font-medium text-muted-foreground">Calories</span>
@@ -59,7 +62,7 @@ export function HomeDashboard() {
 
               <div className="space-y-2">
                 <div className="flex items-baseline gap-2">
-                  <span className="text-4xl font-bold">{calories}</span>
+                  <span className="text-3xl font-bold">{calories}</span>
                   <span className="text-muted-foreground">consumed</span>
                 </div>
 
@@ -86,7 +89,7 @@ export function HomeDashboard() {
             <CircularProgress
               value={calories}
               max={profile.calorieGoal}
-              size={100}
+              size={90}
               strokeWidth={8}
               color="var(--primary)"
             >
@@ -106,7 +109,7 @@ export function HomeDashboard() {
           onClick={() => setCurrentView("input")}
         >
           <div className="flex items-center gap-3 mb-3">
-            <div className="p-2 rounded-xl bg-accent/20 border border-accent/30">
+            <div className="p-1.5 rounded-xl bg-accent/20 border border-accent/30">
               <Drumstick className="w-5 h-5 text-accent" />
             </div>
             <div>
@@ -134,7 +137,7 @@ export function HomeDashboard() {
           <div className="flex items-center justify-between">
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <div className="p-2 rounded-xl bg-primary/20 border border-primary/30">
+                <div className="p-1.5 rounded-xl bg-primary/20 border border-primary/30">
                   <Trophy className="w-5 h-5 text-primary" />
                 </div>
                 <span className="text-sm font-medium">Today's Score</span>
@@ -151,7 +154,7 @@ export function HomeDashboard() {
             <div className="text-center">
               <span
                 className={cn(
-                  "text-5xl font-bold",
+                  "text-4xl font-bold",
                   score >= 80 ? "text-primary" : score >= 50 ? "text-primary/80" : "text-muted-foreground",
                 )}
               >
@@ -171,13 +174,13 @@ export function HomeDashboard() {
             onClick={() => setCurrentView("input")}
           >
             <div className="flex items-center gap-2 mb-3">
-              <div className="p-2 rounded-xl bg-accent/20 border border-accent/30">
+              <div className="p-1.5 rounded-xl bg-accent/20 border border-accent/30">
                 <Footprints className="w-4 h-4 text-accent" />
               </div>
               <span className="text-sm font-medium">Steps</span>
             </div>
             <div className="flex justify-center">
-              <CircularProgress value={steps} max={profile.stepGoal} size={80} strokeWidth={6} color="var(--accent)">
+              <CircularProgress value={steps} max={profile.stepGoal} size={70} strokeWidth={6} color="var(--accent)">
                 <span className="text-sm font-bold">{(steps / 1000).toFixed(1)}k</span>
               </CircularProgress>
             </div>
@@ -200,7 +203,7 @@ export function HomeDashboard() {
               <div className="flex items-center gap-2 mb-3">
                 <div
                   className={cn(
-                    "p-2 rounded-xl border",
+                    "p-1.5 rounded-xl border",
                     hiit ? "bg-primary/30 border-primary/30" : "bg-muted/30 border-border",
                   )}
                 >
@@ -222,7 +225,7 @@ export function HomeDashboard() {
               onClick={() => setCurrentView("input")}
             >
               <div className="flex items-center gap-2 mb-3">
-                <div className="p-2 rounded-xl bg-accent/20 border border-accent/30">
+                <div className="p-1.5 rounded-xl bg-accent/20 border border-accent/30">
                   <Route className="w-4 h-4 text-accent" />
                 </div>
                 <span className="text-sm font-medium">Distance</span>

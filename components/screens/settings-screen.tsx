@@ -21,6 +21,7 @@ import {
   Cloud,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { AppHeader } from "@/components/ui/app-header"
 
 const accentOptions: { id: AccentTheme; name: string; color: string }[] = [
   { id: "teal", name: "Teal", color: "bg-[oklch(0.75_0.18_180)]" },
@@ -78,10 +79,8 @@ export function SettingsScreen() {
   return (
     <div className="min-h-screen pb-24 lg:pb-8 relative z-10">
       {/* Header */}
-      <header className="px-5 pt-12 lg:pt-8 pb-6">
-        <h1 className="text-2xl font-bold">Settings</h1>
-        <p className="text-sm text-muted-foreground">Customize your profile and goals</p>
-      </header>
+      {/* Header */}
+      <AppHeader title="Settings" subtitle="Customize your profile and goals" />
 
       <div className="px-5 space-y-4 lg:grid lg:grid-cols-2 lg:gap-4 lg:space-y-0">
         <GlassCard className="animate-slide-up lg:col-span-2">
@@ -92,7 +91,7 @@ export function SettingsScreen() {
             <span className="font-semibold">Account</span>
           </div>
 
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col items-start gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex items-center gap-3">
               {user?.photoURL ? (
                 <img
@@ -107,7 +106,7 @@ export function SettingsScreen() {
               )}
               <div>
                 <p className="font-medium text-foreground">{user?.displayName || "User"}</p>
-                <p className="text-sm text-muted-foreground">{user?.email}</p>
+                <p className="text-sm text-muted-foreground break-all">{user?.email}</p>
               </div>
             </div>
             <Button
@@ -115,7 +114,7 @@ export function SettingsScreen() {
               size="sm"
               onClick={handleSignOut}
               disabled={isSigningOut}
-              className="border-destructive/50 text-destructive hover:bg-destructive/10 bg-transparent"
+              className="w-full lg:w-auto border-destructive/50 text-destructive hover:bg-destructive/10 bg-transparent"
             >
               <LogOut className="w-4 h-4 mr-2" />
               {isSigningOut ? "Signing out..." : "Sign Out"}
@@ -173,18 +172,18 @@ export function SettingsScreen() {
           {/* Accent Theme Selection */}
           <div>
             <label className="text-sm text-muted-foreground mb-2 block">Accent Color</label>
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
               {accentOptions.map((option) => (
                 <button
                   key={option.id}
                   onClick={() => setAccentTheme(option.id)}
                   className={cn(
-                    "flex flex-col items-center gap-2 p-3 rounded-xl border transition-all",
+                    "flex flex-col items-center gap-3 p-4 rounded-xl border transition-all",
                     accentTheme === option.id ? "border-primary/50 bg-primary/10" : "border-border hover:bg-muted/20",
                   )}
                 >
-                  <div className={cn("w-8 h-8 rounded-full", option.color)} />
-                  <span className="text-xs">{option.name}</span>
+                  <div className={cn("w-10 h-10 rounded-full shadow-sm", option.color)} />
+                  <span className="text-sm font-medium">{option.name}</span>
                 </button>
               ))}
             </div>

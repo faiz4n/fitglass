@@ -39,7 +39,7 @@ export function Onboarding() {
   const [tdee, setTdee] = useState(0)
 
   const inputClass =
-    "w-full bg-muted/30 border border-glass-border rounded-xl px-4 py-4 text-foreground text-lg placeholder:text-muted-foreground focus:outline-none focus:border-neon-cyan focus:ring-1 focus:ring-neon-cyan/50 transition-all"
+    "w-full bg-muted/30 border border-glass-border rounded-xl px-4 py-3 text-foreground text-base placeholder:text-muted-foreground focus:outline-none focus:border-neon-cyan focus:ring-1 focus:ring-neon-cyan/50 transition-all"
 
   const calculateSuggestions = () => {
     const w = Number.parseFloat(weight)
@@ -142,11 +142,11 @@ export function Onboarding() {
       case 0:
         return (
           <div className="text-center space-y-6">
-            <div className="w-24 h-24 mx-auto rounded-3xl bg-primary/20 flex items-center justify-center glow-primary">
+            <div className="w-20 h-20 mx-auto rounded-3xl bg-primary/20 flex items-center justify-center glow-primary">
               <Sparkles className="w-12 h-12 text-neon-cyan" />
             </div>
             <div>
-              <h2 className="text-3xl font-bold mb-2">
+              <h2 className="text-2xl font-bold mb-2">
                 Welcome to <span className="text-neon-cyan text-glow">FitGlass</span>
               </h2>
               <p className="text-muted-foreground">
@@ -170,7 +170,7 @@ export function Onboarding() {
         return (
           <div className="space-y-6">
             <div className="text-center">
-              <div className="w-16 h-16 mx-auto rounded-2xl bg-primary/20 flex items-center justify-center mb-4">
+              <div className="w-12 h-12 mx-auto rounded-2xl bg-primary/20 flex items-center justify-center mb-4">
                 <Users className="w-8 h-8 text-neon-cyan" />
               </div>
               <h2 className="text-2xl font-bold">Gender</h2>
@@ -180,7 +180,7 @@ export function Onboarding() {
               <button
                 onClick={() => setGender("male")}
                 className={cn(
-                  "p-6 rounded-2xl border transition-all duration-300 flex flex-col items-center gap-3",
+                  "p-4 rounded-2xl border transition-all duration-300 flex flex-col items-center gap-3",
                   gender === "male"
                     ? "bg-primary/20 border-primary glow-primary"
                     : "bg-muted/10 border-glass-border hover:bg-muted/20",
@@ -194,7 +194,7 @@ export function Onboarding() {
               <button
                 onClick={() => setGender("female")}
                 className={cn(
-                  "p-6 rounded-2xl border transition-all duration-300 flex flex-col items-center gap-3",
+                  "p-4 rounded-2xl border transition-all duration-300 flex flex-col items-center gap-3",
                   gender === "female"
                     ? "bg-accent/20 border-accent glow-accent"
                     : "bg-muted/10 border-glass-border hover:bg-muted/20",
@@ -213,7 +213,7 @@ export function Onboarding() {
         return (
           <div className="space-y-6">
             <div className="text-center">
-              <div className="w-16 h-16 mx-auto rounded-2xl bg-accent/20 flex items-center justify-center mb-4">
+              <div className="w-12 h-12 mx-auto rounded-2xl bg-accent/20 flex items-center justify-center mb-4">
                 <Scale className="w-8 h-8 text-accent" />
               </div>
               <h2 className="text-2xl font-bold">Body Stats</h2>
@@ -258,7 +258,7 @@ export function Onboarding() {
         return (
           <div className="space-y-6">
             <div className="text-center">
-              <div className="w-16 h-16 mx-auto rounded-2xl bg-primary/20 flex items-center justify-center mb-4">
+              <div className="w-12 h-12 mx-auto rounded-2xl bg-primary/20 flex items-center justify-center mb-4">
                 <Target className="w-8 h-8 text-primary" />
               </div>
               <h2 className="text-2xl font-bold">Fat Loss Goals</h2>
@@ -304,7 +304,7 @@ export function Onboarding() {
         return (
           <div className="space-y-6">
             <div className="text-center">
-              <div className="w-16 h-16 mx-auto rounded-2xl bg-accent/20 flex items-center justify-center mb-4">
+              <div className="w-12 h-12 mx-auto rounded-2xl bg-accent/20 flex items-center justify-center mb-4">
                 <Activity className="w-8 h-8 text-accent" />
               </div>
               <h2 className="text-2xl font-bold">Activity Level</h2>
@@ -364,7 +364,7 @@ export function Onboarding() {
         return (
           <div className="space-y-6">
             <div className="text-center">
-              <div className="w-16 h-16 mx-auto rounded-2xl bg-accent/20 flex items-center justify-center mb-4">
+              <div className="w-12 h-12 mx-auto rounded-2xl bg-accent/20 flex items-center justify-center mb-4">
                 <Footprints className="w-8 h-8 text-accent" />
               </div>
               <h2 className="text-2xl font-bold">Daily Activity</h2>
@@ -390,7 +390,7 @@ export function Onboarding() {
         return (
           <div className="space-y-6">
             <div className="text-center">
-              <div className="w-16 h-16 mx-auto rounded-2xl bg-primary/20 flex items-center justify-center mb-4">
+              <div className="w-12 h-12 mx-auto rounded-2xl bg-primary/20 flex items-center justify-center mb-4">
                 <Timer className="w-8 h-8 text-primary" />
               </div>
               <h2 className="text-2xl font-bold">HIIT Cardio</h2>
@@ -459,7 +459,7 @@ export function Onboarding() {
         return (
           <div className="space-y-6">
             <div className="text-center">
-              <div className="w-16 h-16 mx-auto rounded-2xl bg-primary/20 flex items-center justify-center mb-4">
+              <div className="w-12 h-12 mx-auto rounded-2xl bg-primary/20 flex items-center justify-center mb-4">
                 <Flame className="w-8 h-8 text-neon-cyan" />
               </div>
               <h2 className="text-2xl font-bold">Nutrition Goals</h2>
@@ -519,7 +519,7 @@ export function Onboarding() {
               <Check className="w-12 h-12 text-primary" />
             </div>
             <div>
-              <h2 className="text-3xl font-bold mb-2">You{"'"}re All Set!</h2>
+              <h2 className="text-2xl font-bold mb-2">You{"'"}re All Set!</h2>
               <p className="text-muted-foreground">
                 Ready to start your transformation, <span className="text-neon-cyan">{name}</span>?
               </p>
@@ -566,7 +566,7 @@ export function Onboarding() {
       </div>
 
       {/* Content */}
-      <div className="flex-1 px-5 pb-32">
+      <div className="flex-1 px-4 pb-32">
         <GlassCard variant="strong" className="animate-slide-up">
           {renderStep()}
         </GlassCard>
@@ -579,7 +579,7 @@ export function Onboarding() {
             <Button
               variant="outline"
               onClick={handleBack}
-              className="flex-1 h-14 rounded-2xl border-glass-border hover:bg-muted/30 bg-transparent"
+              className="flex-1 h-12 rounded-2xl border-glass-border hover:bg-muted/30 bg-transparent"
             >
               <ChevronLeft className="w-5 h-5 mr-1" />
               Back
@@ -590,7 +590,7 @@ export function Onboarding() {
             <Button
               onClick={handleNext}
               disabled={!isStepValid()}
-              className="flex-1 h-14 rounded-2xl bg-primary hover:bg-primary/90 glow-primary disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 h-12 rounded-2xl bg-primary hover:bg-primary/90 glow-primary disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Continue
               <ChevronRight className="w-5 h-5 ml-1" />
@@ -598,7 +598,7 @@ export function Onboarding() {
           ) : (
             <Button
               onClick={handleComplete}
-              className="flex-1 h-14 rounded-2xl bg-success hover:bg-success/90 text-lg font-semibold"
+              className="flex-1 h-12 rounded-2xl bg-success hover:bg-success/90 text-lg font-semibold"
               style={{ boxShadow: "0 0 30px var(--success)" }}
             >
               Start Tracking

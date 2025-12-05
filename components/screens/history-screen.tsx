@@ -6,6 +6,7 @@ import { useFitnessStore } from "@/lib/fitness-store"
 import { Flame, Drumstick, Footprints, Zap, Trophy, Trash2, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { AppHeader } from "@/components/ui/app-header"
 
 export function HistoryScreen() {
   const { logs, profile, deleteLog } = useFitnessStore()
@@ -37,10 +38,8 @@ export function HistoryScreen() {
   return (
     <div className="min-h-screen pb-24 relative z-10">
       {/* Header */}
-      <header className="px-5 pt-12 pb-6">
-        <h1 className="text-2xl font-bold">History</h1>
-        <p className="text-sm text-muted-foreground">{logs.length} days logged</p>
-      </header>
+      {/* Header */}
+      <AppHeader title="History" subtitle={`${logs.length} days logged`} />
 
       <div className="px-5 space-y-3">
         {sortedLogs.length > 0 ? (

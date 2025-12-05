@@ -6,6 +6,7 @@ import { useFitnessStore } from "@/lib/fitness-store"
 import { Button } from "@/components/ui/button"
 import { Flame, Drumstick, Footprints, Zap, Save, X, ChevronLeft, ChevronRight, CalendarDays } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { AppHeader } from "@/components/ui/app-header"
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false)
@@ -85,54 +86,26 @@ export function DailyInput() {
 
   const isToday = selectedDate === new Date().toISOString().split("T")[0]
 
-  const numpadKeys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "C", "0", "⌫"]
+  const handleInputChange = (value: string, field: "calories" | "protein" | "steps") => {
+    const numValue = value === "" ? 0 : Number.parseInt(value)
+    if (isNaN(numValue)) return
 
-  const handleNumpadClick = (key: string) => {
-    if (!activeInput) return
-
-    const setter = activeInput === "calories" ? setCalories : activeInput === "protein" ? setProtein : setSteps
-    const current = activeInput === "calories" ? calories : activeInput === "protein" ? protein : steps
-
-    if (key === "C") {
-      setter(0)
-    } else if (key === "⌫") {
-      setter(Math.floor(current / 10))
-    } else {
-      const newValue = current * 10 + Number.parseInt(key)
-      const maxValue = activeInput === "calories" ? 10000 : activeInput === "protein" ? 500 : 100000
-      if (newValue <= maxValue) {
-        setter(newValue)
-      }
-    }
+    if (field === "calories") setCalories(numValue)
+    if (field === "protein") setProtein(numValue)
+    if (field === "steps") setSteps(numValue)
   }
-
-  const handleDesktopInputChange = (field: "calories" | "protein" | "steps", value: string) => {
-    const numValue = Number.parseInt(value) || 0
-    const maxValue = field === "calories" ? 10000 : field === "protein" ? 500 : 100000
-    const clampedValue = Math.min(numValue, maxValue)
-    if (field === "calories") setCalories(clampedValue)
-    else if (field === "protein") setProtein(clampedValue)
-    else setSteps(clampedValue)
-  }
-
-  const inputClass =
-    "w-full bg-muted/30 border border-border rounded-xl px-4 py-3 text-foreground text-2xl font-bold text-right focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-all"
 
   return (
     <div className="min-h-screen pb-24 relative z-10">
       {/* Header */}
-      <header className="px-5 pt-12 pb-6 flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Log Entry</h1>
-          <p className="text-sm text-muted-foreground">Track your daily intake</p>
-        </div>
+      <AppHeader title="Log Entry" subtitle="Track your daily intake">
         <button
           onClick={() => setCurrentView("home")}
-          className="p-2 rounded-xl bg-muted/30 border border-border hover:bg-muted/50 transition-colors"
+          className="p-2 rounded-full hover:bg-muted/20 transition-colors"
         >
-          <X className="w-5 h-5" />
+          <X className="w-6 h-6" />
         </button>
-      </header>
+      </AppHeader>
 
       <div className="px-5 space-y-4">
         <GlassCard className="animate-slide-up">
@@ -173,30 +146,29 @@ export function DailyInput() {
         <GlassCard
           variant={activeInput === "calories" ? "highlight" : "default"}
           className="cursor-pointer transition-all"
-          onClick={() => isMobile && setActiveInput("calories")}
+          onClick={() => setActiveInput("calories")}
         >
           <div className="flex items-center gap-3">
             <div className="p-3 rounded-xl bg-primary/20 border border-primary/30">
               <Flame className="w-6 h-6 text-primary" />
             </div>
             <div className="flex-1">
-              <p className="text-sm text-muted-foreground">Calories Consumed</p>
-              {isMobile ? (
-                <p className={cn("text-3xl font-bold transition-all", activeInput === "calories" && "text-primary")}>
-                  {calories} <span className="text-lg text-muted-foreground font-normal">kcal</span>
-                </p>
-              ) : (
-                <div className="flex items-center gap-2">
-                  <input
-                    type="number"
-                    value={calories || ""}
-                    onChange={(e) => handleDesktopInputChange("calories", e.target.value)}
-                    placeholder="0"
-                    className={inputClass}
-                  />
-                  <span className="text-lg text-muted-foreground font-normal">kcal</span>
-                </div>
-              )}
+              <p className="text-sm text-muted-foreground mb-1">Calories Consumed</p>
+              <div className="flex items-baseline gap-2">
+                <input
+                  type="number"
+                  inputMode="decimal"
+                  value={calories || ""}
+                  onChange={(e) => handleInputChange(e.target.value, "calories")}
+                  placeholder="0"
+                  className={cn(
+                    "bg-transparent border-none p-0 text-2xl font-bold focus:outline-none focus:ring-0 w-24",
+                    activeInput === "calories" && "text-primary",
+                  )}
+                  onFocus={() => setActiveInput("calories")}
+                />
+                <span className="text-lg text-muted-foreground font-normal">kcal</span>
+              </div>
             </div>
           </div>
         </GlassCard>
@@ -205,30 +177,29 @@ export function DailyInput() {
         <GlassCard
           variant={activeInput === "protein" ? "highlight" : "default"}
           className="cursor-pointer transition-all"
-          onClick={() => isMobile && setActiveInput("protein")}
+          onClick={() => setActiveInput("protein")}
         >
           <div className="flex items-center gap-3">
             <div className="p-3 rounded-xl bg-accent/20 border border-accent/30">
               <Drumstick className="w-6 h-6 text-accent" />
             </div>
             <div className="flex-1">
-              <p className="text-sm text-muted-foreground">Protein Intake</p>
-              {isMobile ? (
-                <p className={cn("text-3xl font-bold transition-all", activeInput === "protein" && "text-accent")}>
-                  {protein} <span className="text-lg text-muted-foreground font-normal">/ {profile.proteinGoal}g</span>
-                </p>
-              ) : (
-                <div className="flex items-center gap-2">
-                  <input
-                    type="number"
-                    value={protein || ""}
-                    onChange={(e) => handleDesktopInputChange("protein", e.target.value)}
-                    placeholder="0"
-                    className={inputClass}
-                  />
-                  <span className="text-lg text-muted-foreground font-normal">/ {profile.proteinGoal}g</span>
-                </div>
-              )}
+              <p className="text-sm text-muted-foreground mb-1">Protein Intake</p>
+              <div className="flex items-baseline gap-2">
+                <input
+                  type="number"
+                  inputMode="decimal"
+                  value={protein || ""}
+                  onChange={(e) => handleInputChange(e.target.value, "protein")}
+                  placeholder="0"
+                  className={cn(
+                    "bg-transparent border-none p-0 text-2xl font-bold focus:outline-none focus:ring-0 w-24",
+                    activeInput === "protein" && "text-accent",
+                  )}
+                  onFocus={() => setActiveInput("protein")}
+                />
+                <span className="text-lg text-muted-foreground font-normal">/ {profile.proteinGoal}g</span>
+              </div>
             </div>
           </div>
         </GlassCard>
@@ -237,35 +208,31 @@ export function DailyInput() {
         <GlassCard
           variant={activeInput === "steps" ? "highlight" : "default"}
           className="cursor-pointer transition-all"
-          onClick={() => isMobile && setActiveInput("steps")}
+          onClick={() => setActiveInput("steps")}
         >
           <div className="flex items-center gap-3">
             <div className="p-3 rounded-xl bg-chart-4/20 border border-chart-4/30">
               <Footprints className="w-6 h-6 text-chart-4" />
             </div>
             <div className="flex-1">
-              <p className="text-sm text-muted-foreground">Steps Count</p>
-              {isMobile ? (
-                <p className={cn("text-3xl font-bold transition-all", activeInput === "steps" && "text-chart-4")}>
-                  {steps.toLocaleString()}{" "}
-                  <span className="text-lg text-muted-foreground font-normal">
-                    / {(profile.stepGoal / 1000).toFixed(0)}k
-                  </span>
-                </p>
-              ) : (
-                <div className="flex items-center gap-2">
-                  <input
-                    type="number"
-                    value={steps || ""}
-                    onChange={(e) => handleDesktopInputChange("steps", e.target.value)}
-                    placeholder="0"
-                    className={inputClass}
-                  />
-                  <span className="text-lg text-muted-foreground font-normal">
-                    / {(profile.stepGoal / 1000).toFixed(0)}k
-                  </span>
-                </div>
-              )}
+              <p className="text-sm text-muted-foreground mb-1">Steps Count</p>
+              <div className="flex items-baseline gap-2">
+                <input
+                  type="number"
+                  inputMode="decimal"
+                  value={steps || ""}
+                  onChange={(e) => handleInputChange(e.target.value, "steps")}
+                  placeholder="0"
+                  className={cn(
+                    "bg-transparent border-none p-0 text-2xl font-bold focus:outline-none focus:ring-0 w-32",
+                    activeInput === "steps" && "text-chart-4",
+                  )}
+                  onFocus={() => setActiveInput("steps")}
+                />
+                <span className="text-lg text-muted-foreground font-normal">
+                  / {(profile.stepGoal / 1000).toFixed(0)}k
+                </span>
+              </div>
             </div>
           </div>
         </GlassCard>
@@ -309,26 +276,8 @@ export function DailyInput() {
           </GlassCard>
         )}
 
-        {isMobile && activeInput && (
-          <GlassCard variant="strong" className="animate-slide-up">
-            <div className="grid grid-cols-3 gap-3">
-              {numpadKeys.map((key) => (
-                <button
-                  key={key}
-                  onClick={() => handleNumpadClick(key)}
-                  className={cn(
-                    "h-14 rounded-xl font-bold text-xl transition-all border border-border",
-                    "bg-muted/30 hover:bg-muted/50 active:scale-95",
-                    key === "C" && "text-destructive",
-                    key === "⌫" && "text-warning",
-                  )}
-                >
-                  {key}
-                </button>
-              ))}
-            </div>
-          </GlassCard>
-        )}
+        {/* Spacing for keyboard */}
+        <div className="h-48 lg:hidden" />
 
         {/* Save Button */}
         <Button

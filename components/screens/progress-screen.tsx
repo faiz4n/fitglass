@@ -5,6 +5,7 @@ import { useFitnessStore } from "@/lib/fitness-store"
 import { Button } from "@/components/ui/button"
 import { TrendingDown, Flame, Drumstick, Calendar, Award, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { AppHeader } from "@/components/ui/app-header"
 
 export function ProgressScreen() {
   const { profile, getTotalFatLost, getWeeklyLogs, logs, setCurrentView } = useFitnessStore()
@@ -26,10 +27,8 @@ export function ProgressScreen() {
   return (
     <div className="min-h-screen pb-24 relative z-10">
       {/* Header */}
-      <header className="px-5 pt-12 pb-6">
-        <h1 className="text-2xl font-bold">Progress</h1>
-        <p className="text-sm text-muted-foreground">Track your fat loss journey</p>
-      </header>
+      {/* Header */}
+      <AppHeader title="Progress" subtitle="Track your fat loss journey" />
 
       <div className="px-5 space-y-4">
         {/* Fat Mass Progress Card */}
