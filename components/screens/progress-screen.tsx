@@ -138,7 +138,7 @@ export function ProgressScreen() {
                         <div
                           className={cn(
                             "w-full rounded-t-md transition-all duration-500 min-h-[4px]",
-                            log.protein === 0 ? "bg-muted/50" : isOnTarget ? "bg-accent" : "bg-muted/50",
+                            log.protein === 0 ? "bg-muted/50" : isOnTarget ? "bg-primary" : "bg-muted/50",
                           )}
                           style={{ height: `${height}%` }}
                         />
@@ -151,7 +151,7 @@ export function ProgressScreen() {
                 </div>
                 <div className="flex items-center justify-center gap-4 mt-2 text-[10px] text-muted-foreground">
                   <div className="flex items-center gap-1">
-                    <div className="w-2 h-2 rounded-sm bg-accent" />
+                    <div className="w-2 h-2 rounded-sm bg-primary" />
                     <span>Goal met</span>
                   </div>
                   <div className="flex items-center gap-1">
@@ -179,8 +179,8 @@ export function ProgressScreen() {
           </div>
 
           <div className="grid grid-cols-3 gap-3">
-            <div className="text-center p-3 rounded-xl bg-accent/10">
-              <p className="text-2xl font-bold text-accent">{proteinStreak}</p>
+            <div className="text-center p-3 rounded-xl bg-primary/10">
+              <p className="text-2xl font-bold text-primary">{proteinStreak}</p>
               <p className="text-xs text-muted-foreground">Protein Days</p>
             </div>
             <div className="text-center p-3 rounded-xl bg-success/10">

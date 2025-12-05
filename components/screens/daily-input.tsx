@@ -58,9 +58,22 @@ export function DailyInput() {
       setHiit(false)
     }
   }, [selectedDate, getLogForDate])
+  
+  // Reset date to today when component unmounts
+  useEffect(() => {
+    return () => {
+      setSelectedDate(new Date().toISOString().split("T")[0])
+    }
+  }, [setSelectedDate])
 
   const handleSave = () => {
     updateLogForDate(selectedDate, { calories, protein, steps, hiit })
+    setSelectedDate(new Date().toISOString().split("T")[0])
+    setCurrentView("home")
+  }
+
+  const handleClose = () => {
+    setSelectedDate(new Date().toISOString().split("T")[0])
     setCurrentView("home")
   }
 
@@ -100,7 +113,7 @@ export function DailyInput() {
       {/* Header */}
       <AppHeader title="Log Entry" subtitle="Track your daily intake">
         <button
-          onClick={() => setCurrentView("home")}
+          onClick={handleClose}
           className="p-2 rounded-full hover:bg-muted/20 transition-colors"
         >
           <X className="w-6 h-6" />
@@ -180,8 +193,8 @@ export function DailyInput() {
           onClick={() => setActiveInput("protein")}
         >
           <div className="flex items-center gap-3">
-            <div className="p-3 rounded-xl bg-accent/20 border border-accent/30">
-              <Drumstick className="w-6 h-6 text-accent" />
+            <div className="p-3 rounded-xl bg-primary/20 border border-primary/30">
+              <Drumstick className="w-6 h-6 text-primary" />
             </div>
             <div className="flex-1">
               <p className="text-sm text-muted-foreground mb-1">Protein Intake</p>
@@ -194,7 +207,7 @@ export function DailyInput() {
                   placeholder="0"
                   className={cn(
                     "bg-transparent border-none p-0 text-2xl font-bold focus:outline-none focus:ring-0 w-24",
-                    activeInput === "protein" && "text-accent",
+                    activeInput === "protein" && "text-primary",
                   )}
                   onFocus={() => setActiveInput("protein")}
                 />
@@ -211,8 +224,8 @@ export function DailyInput() {
           onClick={() => setActiveInput("steps")}
         >
           <div className="flex items-center gap-3">
-            <div className="p-3 rounded-xl bg-chart-4/20 border border-chart-4/30">
-              <Footprints className="w-6 h-6 text-chart-4" />
+            <div className="p-3 rounded-xl bg-primary/20 border border-primary/30">
+              <Footprints className="w-6 h-6 text-primary" />
             </div>
             <div className="flex-1">
               <p className="text-sm text-muted-foreground mb-1">Steps Count</p>
@@ -225,7 +238,7 @@ export function DailyInput() {
                   placeholder="0"
                   className={cn(
                     "bg-transparent border-none p-0 text-2xl font-bold focus:outline-none focus:ring-0 w-32",
-                    activeInput === "steps" && "text-chart-4",
+                    activeInput === "steps" && "text-primary",
                   )}
                   onFocus={() => setActiveInput("steps")}
                 />

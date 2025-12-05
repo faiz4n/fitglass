@@ -97,14 +97,14 @@ export function HistoryScreen() {
                   <Drumstick
                     className={cn(
                       "w-4 h-4",
-                      log.protein >= profile.proteinGoal ? "text-accent" : "text-muted-foreground",
+                      log.protein >= profile.proteinGoal ? "text-primary" : "text-muted-foreground",
                     )}
                   />
                   <span className="text-sm">{log.protein}g</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <Footprints
-                    className={cn("w-4 h-4", log.steps >= profile.stepGoal ? "text-chart-4" : "text-muted-foreground")}
+                    className={cn("w-4 h-4", log.steps >= profile.stepGoal ? "text-primary" : "text-muted-foreground")}
                   />
                   <span className="text-sm">{(log.steps / 1000).toFixed(1)}k</span>
                 </div>

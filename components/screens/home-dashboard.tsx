@@ -109,8 +109,8 @@ export function HomeDashboard() {
           onClick={() => setCurrentView("input")}
         >
           <div className="flex items-center gap-3 mb-3">
-            <div className="p-1.5 rounded-xl bg-accent/20 border border-accent/30">
-              <Drumstick className="w-5 h-5 text-accent" />
+            <div className="p-1.5 rounded-xl bg-primary/20 border border-primary/30">
+              <Drumstick className="w-5 h-5 text-primary" />
             </div>
             <div>
               <span className="text-sm font-medium">Protein</span>
@@ -120,7 +120,7 @@ export function HomeDashboard() {
           <ProgressBar
             value={protein}
             max={profile.proteinGoal}
-            color="var(--accent)"
+            color="var(--primary)"
             label={`${protein}g / ${profile.proteinGoal}g`}
             showLabel={false}
           />
@@ -174,13 +174,13 @@ export function HomeDashboard() {
             onClick={() => setCurrentView("input")}
           >
             <div className="flex items-center gap-2 mb-3">
-              <div className="p-1.5 rounded-xl bg-accent/20 border border-accent/30">
-                <Footprints className="w-4 h-4 text-accent" />
+              <div className="p-1.5 rounded-xl bg-primary/20 border border-primary/30">
+                <Footprints className="w-4 h-4 text-primary" />
               </div>
               <span className="text-sm font-medium">Steps</span>
             </div>
             <div className="flex justify-center">
-              <CircularProgress value={steps} max={profile.stepGoal} size={70} strokeWidth={6} color="var(--accent)">
+              <CircularProgress value={steps} max={profile.stepGoal} size={70} strokeWidth={6} color="var(--primary)">
                 <span className="text-sm font-bold">{(steps / 1000).toFixed(1)}k</span>
               </CircularProgress>
             </div>
@@ -225,8 +225,8 @@ export function HomeDashboard() {
               onClick={() => setCurrentView("input")}
             >
               <div className="flex items-center gap-2 mb-3">
-                <div className="p-1.5 rounded-xl bg-accent/20 border border-accent/30">
-                  <Route className="w-4 h-4 text-accent" />
+                <div className="p-1.5 rounded-xl bg-primary/20 border border-primary/30">
+                  <Route className="w-4 h-4 text-primary" />
                 </div>
                 <span className="text-sm font-medium">Distance</span>
               </div>

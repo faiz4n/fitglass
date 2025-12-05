@@ -196,7 +196,7 @@ export function Onboarding() {
                 className={cn(
                   "p-4 rounded-2xl border transition-all duration-300 flex flex-col items-center gap-3",
                   gender === "female"
-                    ? "bg-accent/20 border-accent glow-accent"
+                    ? "bg-primary/20 border-primary glow-primary"
                     : "bg-muted/10 border-glass-border hover:bg-muted/20",
                 )}
               >
@@ -213,8 +213,8 @@ export function Onboarding() {
         return (
           <div className="space-y-6">
             <div className="text-center">
-              <div className="w-12 h-12 mx-auto rounded-2xl bg-accent/20 flex items-center justify-center mb-4">
-                <Scale className="w-8 h-8 text-accent" />
+              <div className="w-12 h-12 mx-auto rounded-2xl bg-primary/20 flex items-center justify-center mb-4">
+                <Scale className="w-8 h-8 text-primary" />
               </div>
               <h2 className="text-2xl font-bold">Body Stats</h2>
               <p className="text-muted-foreground text-sm">Help us personalize your experience</p>
@@ -304,8 +304,8 @@ export function Onboarding() {
         return (
           <div className="space-y-6">
             <div className="text-center">
-              <div className="w-12 h-12 mx-auto rounded-2xl bg-accent/20 flex items-center justify-center mb-4">
-                <Activity className="w-8 h-8 text-accent" />
+              <div className="w-12 h-12 mx-auto rounded-2xl bg-primary/20 flex items-center justify-center mb-4">
+                <Activity className="w-8 h-8 text-primary" />
               </div>
               <h2 className="text-2xl font-bold">Activity Level</h2>
               <p className="text-muted-foreground text-sm">What is your daily activity level?</p>
@@ -364,8 +364,8 @@ export function Onboarding() {
         return (
           <div className="space-y-6">
             <div className="text-center">
-              <div className="w-12 h-12 mx-auto rounded-2xl bg-accent/20 flex items-center justify-center mb-4">
-                <Footprints className="w-8 h-8 text-accent" />
+              <div className="w-12 h-12 mx-auto rounded-2xl bg-primary/20 flex items-center justify-center mb-4">
+                <Footprints className="w-8 h-8 text-primary" />
               </div>
               <h2 className="text-2xl font-bold">Daily Activity</h2>
               <p className="text-muted-foreground text-sm">Set your movement goals</p>
