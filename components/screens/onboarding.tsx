@@ -39,7 +39,7 @@ export function Onboarding() {
   const [tdee, setTdee] = useState(0)
 
   const inputClass =
-    "w-full bg-muted/30 border border-glass-border rounded-xl px-4 py-3 text-foreground text-base placeholder:text-muted-foreground focus:outline-none focus:border-neon-cyan focus:ring-1 focus:ring-neon-cyan/50 transition-all"
+    "w-[calc(100%-0.5rem)] mx-1 bg-muted/30 border border-glass-border rounded-xl px-4 py-3 text-foreground text-base placeholder:text-muted-foreground focus:outline-none focus:border-neon-cyan focus:ring-1 focus:ring-neon-cyan/50 transition-all"
 
   const calculateSuggestions = () => {
     const w = Number.parseFloat(weight)
@@ -154,7 +154,7 @@ export function Onboarding() {
               </p>
             </div>
             <div className="space-y-2 text-left">
-              <p className="text-sm text-muted-foreground">What{"'"}s your name?</p>
+              <p className="text-sm text-muted-foreground ml-3">What{"'"}s your name?</p>
               <input
                 type="text"
                 value={name}
@@ -178,7 +178,10 @@ export function Onboarding() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <button
-                onClick={() => setGender("male")}
+                onClick={() => {
+                  setGender("male")
+                  useFitnessStore.getState().setAccentTheme("blue")
+                }}
                 className={cn(
                   "p-4 rounded-2xl border transition-all duration-300 flex flex-col items-center gap-3",
                   gender === "male"
@@ -192,7 +195,10 @@ export function Onboarding() {
                 <span className="font-medium">Male</span>
               </button>
               <button
-                onClick={() => setGender("female")}
+                onClick={() => {
+                  setGender("female")
+                  useFitnessStore.getState().setAccentTheme("rose")
+                }}
                 className={cn(
                   "p-4 rounded-2xl border transition-all duration-300 flex flex-col items-center gap-3",
                   gender === "female"
@@ -221,7 +227,7 @@ export function Onboarding() {
             </div>
             <div className="space-y-4">
               <div>
-                <label className="text-sm text-muted-foreground mb-2 block">Age</label>
+                <label className="text-sm text-muted-foreground mb-2 block ml-3">Age</label>
                 <input
                   type="number"
                   value={age}
@@ -231,7 +237,7 @@ export function Onboarding() {
                 />
               </div>
               <div>
-                <label className="text-sm text-muted-foreground mb-2 block">Height (cm)</label>
+                <label className="text-sm text-muted-foreground mb-2 block ml-3">Height (cm)</label>
                 <input
                   type="number"
                   value={height}
@@ -241,7 +247,7 @@ export function Onboarding() {
                 />
               </div>
               <div>
-                <label className="text-sm text-muted-foreground mb-2 block">Weight (kg)</label>
+                <label className="text-sm text-muted-foreground mb-2 block ml-3">Weight (kg)</label>
                 <input
                   type="number"
                   value={weight}
@@ -266,7 +272,7 @@ export function Onboarding() {
             </div>
             <div className="space-y-4">
               <div>
-                <label className="text-sm text-muted-foreground mb-2 block">Current Fat Mass (kg)</label>
+                <label className="text-sm text-muted-foreground mb-2 block ml-3">Current Fat Mass (kg)</label>
                 <input
                   type="number"
                   step="0.1"
@@ -277,7 +283,7 @@ export function Onboarding() {
                 />
               </div>
               <div>
-                <label className="text-sm text-muted-foreground mb-2 block">Goal Fat Mass (kg)</label>
+                <label className="text-sm text-muted-foreground mb-2 block ml-3">Goal Fat Mass (kg)</label>
                 <input
                   type="number"
                   step="0.1"
@@ -372,7 +378,7 @@ export function Onboarding() {
             </div>
             <div className="space-y-4">
               <div>
-                <label className="text-sm text-muted-foreground mb-2 block">Daily Step Goal</label>
+                <label className="text-sm text-muted-foreground mb-2 block ml-3">Daily Step Goal</label>
                 <input
                   type="number"
                   value={stepGoal}
@@ -440,7 +446,7 @@ export function Onboarding() {
 
               {hiitEnabled && (
                 <div className="animate-slide-up pt-2">
-                  <label className="text-sm text-muted-foreground mb-2 block">Daily Goal (minutes)</label>
+                  <label className="text-sm text-muted-foreground mb-2 block ml-3">Daily Goal (minutes)</label>
                   <input
                     type="number"
                     value={hiitDuration}
@@ -485,7 +491,7 @@ export function Onboarding() {
 
             <div className="space-y-4">
               <div>
-                <label className="text-sm text-muted-foreground mb-2 block">Daily Calorie Goal (kcal)</label>
+                <label className="text-sm text-muted-foreground mb-2 block ml-3">Daily Calorie Goal (kcal)</label>
                 <input
                   type="number"
                   value={calorieGoal}
@@ -496,7 +502,7 @@ export function Onboarding() {
                 <p className="text-xs text-muted-foreground mt-1">Recommended: 1300-1500 for fat loss</p>
               </div>
               <div>
-                <label className="text-sm text-muted-foreground mb-2 flex items-center gap-1">
+                <label className="text-sm text-muted-foreground mb-2 flex items-center gap-1 ml-3">
                   <Drumstick className="w-3 h-3" /> Daily Protein Goal (g)
                 </label>
                 <input
@@ -524,20 +530,78 @@ export function Onboarding() {
                 Ready to start your transformation, <span className="text-neon-cyan">{name}</span>?
               </p>
             </div>
-            <GlassCard variant="strong">
-              <div className="space-y-2 text-left text-sm">
-                <p>Your Goals:</p>
-                <ul className="space-y-1 text-muted-foreground">
-                  <li>
-                    Lose {((Number.parseFloat(currentFatMass) - Number.parseFloat(goalFatMass)) || 0).toFixed(1)} kg of fat
-                  </li>
-                  <li>Eat ~{calorieGoal} calories daily</li>
-                  <li>Hit {proteinGoal}g protein daily</li>
-                  <li>Walk {stepGoal} steps</li>
-                  {hiitEnabled && <li>Complete {hiitDuration} min HIIT</li>}
-                </ul>
+            <div className="space-y-3">
+              <p className="text-sm font-medium text-muted-foreground text-left ml-1">Your Goals:</p>
+              <div className="grid grid-cols-2 gap-3 text-left">
+              <div className="p-3 rounded-2xl bg-primary/10 border border-primary/20 flex flex-col justify-center gap-1">
+                <div className="flex items-center gap-2 text-primary mb-1">
+                  <Scale className="w-4 h-4" />
+                  <span className="text-xs font-semibold uppercase tracking-wider opacity-70">Goal</span>
+                </div>
+                <div>
+                  <p className="font-bold text-lg leading-tight">
+                    Lose {((Number.parseFloat(currentFatMass) - Number.parseFloat(goalFatMass)) || 0).toFixed(1)} kg
+                  </p>
+                  <p className="text-xs text-muted-foreground">of body fat</p>
+                </div>
               </div>
-            </GlassCard>
+
+              <div className="p-3 rounded-2xl bg-primary/10 border border-primary/20 flex flex-col justify-center gap-1">
+                <div className="flex items-center gap-2 text-primary mb-1">
+                  <Flame className="w-4 h-4" />
+                  <span className="text-xs font-semibold uppercase tracking-wider opacity-70">Diet</span>
+                </div>
+                <div>
+                  <p className="font-bold text-lg leading-tight">
+                    Eat {calorieGoal}
+                  </p>
+                  <p className="text-xs text-muted-foreground">calories daily</p>
+                </div>
+              </div>
+
+              <div className="p-3 rounded-2xl bg-primary/10 border border-primary/20 flex flex-col justify-center gap-1">
+                <div className="flex items-center gap-2 text-primary mb-1">
+                  <Drumstick className="w-4 h-4" />
+                  <span className="text-xs font-semibold uppercase tracking-wider opacity-70">Macros</span>
+                </div>
+                <div>
+                  <p className="font-bold text-lg leading-tight">
+                    Hit {proteinGoal}g
+                  </p>
+                  <p className="text-xs text-muted-foreground">protein daily</p>
+                </div>
+              </div>
+
+              <div className="p-3 rounded-2xl bg-primary/10 border border-primary/20 flex flex-col justify-center gap-1">
+                <div className="flex items-center gap-2 text-primary mb-1">
+                  <Footprints className="w-4 h-4" />
+                  <span className="text-xs font-semibold uppercase tracking-wider opacity-70">Activity</span>
+                </div>
+                <div>
+                  <p className="font-bold text-lg leading-tight">
+                    Walk {stepGoal}
+                  </p>
+                  <p className="text-xs text-muted-foreground">steps daily</p>
+                </div>
+              </div>
+
+              {hiitEnabled && (
+                <div className="col-span-2 p-3 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-full bg-primary/20 text-primary">
+                      <Timer className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <p className="font-bold text-lg leading-tight">
+                        Do {hiitDuration} min
+                      </p>
+                      <p className="text-xs text-muted-foreground">HIIT cardio daily</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+            </div>
           </div>
         )
 
@@ -566,10 +630,10 @@ export function Onboarding() {
       </div>
 
       {/* Content */}
-      <div className="flex-1 px-4 pb-32">
-        <GlassCard variant="strong" className="animate-slide-up">
+      <div className="flex-1 px-4 pb-32 flex items-center justify-center">
+        <div className="animate-slide-up w-full max-w-lg">
           {renderStep()}
-        </GlassCard>
+        </div>
       </div>
 
       {/* Navigation */}
