@@ -2,8 +2,7 @@
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react"
 import {
-  signInWithRedirect,
-  getRedirectResult,
+  signInWithPopup,
   signOut as firebaseSignOut,
   onAuthStateChanged,
   type User,
@@ -24,16 +23,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    getRedirectResult(auth)
-      .then((result) => {
-        if (result?.user) {
-          setUser(result.user)
-        }
-      })
-      .catch((error) => {
-        console.error("Error getting redirect result:", error)
-      })
-
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user)
       setLoading(false)
@@ -44,7 +33,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signInWithGoogle = async () => {
     try {
-      await signInWithRedirect(auth, googleProvider)
+      await signInWithPopup(auth, googleProvider)
     } catch (error) {
       console.error("Error signing in with Google:", error)
       throw error

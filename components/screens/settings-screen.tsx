@@ -24,9 +24,9 @@ import { cn } from "@/lib/utils"
 
 const accentOptions: { id: AccentTheme; name: string; color: string }[] = [
   { id: "teal", name: "Teal", color: "bg-[oklch(0.75_0.18_180)]" },
-  { id: "purple", name: "Purple", color: "bg-[oklch(0.7_0.2_280)]" },
-  { id: "coral", name: "Coral", color: "bg-[oklch(0.75_0.18_25)]" },
-  { id: "emerald", name: "Emerald", color: "bg-[oklch(0.72_0.17_145)]" },
+  { id: "blue", name: "Blue", color: "bg-[oklch(0.7_0.18_250)]" },
+  { id: "rose", name: "Rose", color: "bg-[oklch(0.75_0.18_350)]" },
+  { id: "orange", name: "Orange", color: "bg-[oklch(0.75_0.18_50)]" },
 ]
 
 export function SettingsScreen() {
@@ -241,8 +241,8 @@ export function SettingsScreen() {
         {/* Body Composition */}
         <GlassCard className="animate-slide-up" style={{ animationDelay: "0.15s" }}>
           <div className="flex items-center gap-2 mb-4">
-            <div className="p-2 rounded-xl bg-green-500/20">
-              <Scale className="w-5 h-5 text-green-500" />
+            <div className="p-2 rounded-xl bg-accent/20">
+              <Scale className="w-5 h-5 text-accent" />
             </div>
             <span className="font-semibold">Body Composition</span>
           </div>
@@ -274,8 +274,8 @@ export function SettingsScreen() {
         {/* Daily Goals */}
         <GlassCard className="animate-slide-up lg:col-span-2" style={{ animationDelay: "0.2s" }}>
           <div className="flex items-center gap-2 mb-4">
-            <div className="p-2 rounded-xl bg-amber-500/20">
-              <Target className="w-5 h-5 text-amber-500" />
+            <div className="p-2 rounded-xl bg-primary/20">
+              <Target className="w-5 h-5 text-primary" />
             </div>
             <span className="font-semibold">Daily Goals</span>
           </div>

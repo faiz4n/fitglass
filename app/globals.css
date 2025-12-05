@@ -163,14 +163,15 @@
   }
 
   .glass-strong {
-    background: oklch(0.2 0.02 240 / 0.5);
+    background: oklch(1 0 0 / 0.7);
     backdrop-filter: blur(40px);
     -webkit-backdrop-filter: blur(40px);
-    border: 1px solid oklch(0.5 0.05 200 / 0.3);
+    border: 1px solid oklch(0.7 0.02 240 / 0.3);
   }
 
-  :root .glass-strong {
-    background: oklch(1 0 0 / 0.7);
+  .dark .glass-strong {
+    background: oklch(0.2 0.02 240 / 0.5);
+    border: 1px solid oklch(0.5 0.05 200 / 0.3);
   }
 
   /* Removed glow utilities, added blur-based effects instead */
@@ -247,5 +248,16 @@
 
   .animate-pulse-soft {
     animation: pulse-soft 2s ease-in-out infinite;
+  }
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  * {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
   }
 }

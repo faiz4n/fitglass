@@ -4,7 +4,7 @@ import { GlassCard } from "@/components/ui/glass-card"
 import { CircularProgress } from "@/components/ui/circular-progress"
 import { ProgressBar } from "@/components/ui/progress-bar"
 import { useFitnessStore } from "@/lib/fitness-store"
-import { Flame, Drumstick, Footprints, Zap, Trophy, TrendingDown, TrendingUp } from "lucide-react"
+import { Flame, Drumstick, Footprints, Zap, Trophy, TrendingDown, TrendingUp, Route } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export function HomeDashboard() {
@@ -134,8 +134,8 @@ export function HomeDashboard() {
           <div className="flex items-center justify-between">
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <div className="p-2 rounded-xl bg-warning/20 border border-warning/30">
-                  <Trophy className="w-5 h-5 text-warning" />
+                <div className="p-2 rounded-xl bg-primary/20 border border-primary/30">
+                  <Trophy className="w-5 h-5 text-primary" />
                 </div>
                 <span className="text-sm font-medium">Today's Score</span>
               </div>
@@ -144,15 +144,15 @@ export function HomeDashboard() {
                   Protein: {protein >= profile.proteinGoal ? 40 : Math.floor((protein / profile.proteinGoal) * 40)}/40
                 </p>
                 <p>Calories: {calorieScore}/30</p>
-                <p>Steps: {steps >= profile.stepGoal ? 10 : Math.floor((steps / profile.stepGoal) * 10)}/10</p>
-                <p>HIIT: {hiit ? 10 : 0}/10</p>
+                <p>Steps: {steps >= profile.stepGoal ? (profile.hiitEnabled ? 20 : 30) : Math.floor((steps / profile.stepGoal) * (profile.hiitEnabled ? 20 : 30))}/{profile.hiitEnabled ? 20 : 30}</p>
+                {profile.hiitEnabled && <p>HIIT: {hiit ? 10 : 0}/10</p>}
               </div>
             </div>
             <div className="text-center">
               <span
                 className={cn(
                   "text-5xl font-bold",
-                  score >= 80 ? "text-success" : score >= 50 ? "text-warning" : "text-foreground",
+                  score >= 80 ? "text-primary" : score >= 50 ? "text-primary/80" : "text-muted-foreground",
                 )}
               >
                 {score}
@@ -162,7 +162,7 @@ export function HomeDashboard() {
           </div>
         </GlassCard>
 
-        {/* Steps & HIIT Row */}
+        {/* Steps & HIIT/Distance Row */}
         <div className="grid grid-cols-2 gap-4 lg:col-span-2">
           {/* Steps Card */}
           <GlassCard
@@ -171,47 +171,68 @@ export function HomeDashboard() {
             onClick={() => setCurrentView("input")}
           >
             <div className="flex items-center gap-2 mb-3">
-              <div className="p-2 rounded-xl bg-chart-4/20 border border-chart-4/30">
-                <Footprints className="w-4 h-4 text-chart-4" />
+              <div className="p-2 rounded-xl bg-accent/20 border border-accent/30">
+                <Footprints className="w-4 h-4 text-accent" />
               </div>
               <span className="text-sm font-medium">Steps</span>
             </div>
-            <CircularProgress value={steps} max={profile.stepGoal} size={80} strokeWidth={6} color="var(--chart-4)">
-              <span className="text-sm font-bold">{(steps / 1000).toFixed(1)}k</span>
-            </CircularProgress>
+            <div className="flex justify-center">
+              <CircularProgress value={steps} max={profile.stepGoal} size={80} strokeWidth={6} color="var(--accent)">
+                <span className="text-sm font-bold">{(steps / 1000).toFixed(1)}k</span>
+              </CircularProgress>
+            </div>
             <p className="text-xs text-muted-foreground text-center mt-2">
               {steps >= profile.stepGoal ? "Goal reached!" : `${((profile.stepGoal - steps) / 1000).toFixed(1)}k to go`}
             </p>
           </GlassCard>
 
-          {/* HIIT Card - Changed variant from "glow" to "highlight", removed animate-pulse-glow */}
-          <GlassCard
-            variant={hiit ? "highlight" : "default"}
-            className={cn(
-              "animate-slide-up cursor-pointer hover:scale-[1.02] transition-transform",
-              hiit && "animate-pulse-soft",
-            )}
-            style={{ animationDelay: "0.3s" }}
-            onClick={() => setCurrentView("input")}
-          >
-            <div className="flex items-center gap-2 mb-3">
-              <div
-                className={cn(
-                  "p-2 rounded-xl border",
-                  hiit ? "bg-primary/30 border-primary/30" : "bg-muted/30 border-border",
-                )}
-              >
-                <Zap className={cn("w-4 h-4", hiit ? "text-primary" : "text-muted-foreground")} />
+          {/* HIIT or Distance Card */}
+          {profile.hiitEnabled ? (
+            <GlassCard
+              variant={hiit ? "highlight" : "default"}
+              className={cn(
+                "animate-slide-up cursor-pointer hover:scale-[1.02] transition-transform",
+                hiit && "animate-pulse-soft",
+              )}
+              style={{ animationDelay: "0.3s" }}
+              onClick={() => setCurrentView("input")}
+            >
+              <div className="flex items-center gap-2 mb-3">
+                <div
+                  className={cn(
+                    "p-2 rounded-xl border",
+                    hiit ? "bg-primary/30 border-primary/30" : "bg-muted/30 border-border",
+                  )}
+                >
+                  <Zap className={cn("w-4 h-4", hiit ? "text-primary" : "text-muted-foreground")} />
+                </div>
+                <span className="text-sm font-medium">HIIT</span>
               </div>
-              <span className="text-sm font-medium">HIIT</span>
-            </div>
-            <div className="flex flex-col items-center justify-center py-2">
-              <span className={cn("text-2xl font-bold", hiit ? "text-primary" : "text-muted-foreground")}>
-                {hiit ? "Done!" : "Not Yet"}
-              </span>
-              <p className="text-xs text-muted-foreground mt-1">5-min workout</p>
-            </div>
-          </GlassCard>
+              <div className="flex flex-col items-center justify-center py-2">
+                <span className={cn("text-2xl font-bold", hiit ? "text-primary" : "text-muted-foreground")}>
+                  {hiit ? "Done!" : "Not Yet"}
+                </span>
+                <p className="text-xs text-muted-foreground mt-1">{profile.hiitDuration}-min workout</p>
+              </div>
+            </GlassCard>
+          ) : (
+            <GlassCard
+              className="animate-slide-up cursor-pointer hover:scale-[1.02] transition-transform"
+              style={{ animationDelay: "0.3s" }}
+              onClick={() => setCurrentView("input")}
+            >
+              <div className="flex items-center gap-2 mb-3">
+                <div className="p-2 rounded-xl bg-accent/20 border border-accent/30">
+                  <Route className="w-4 h-4 text-accent" />
+                </div>
+                <span className="text-sm font-medium">Distance</span>
+              </div>
+              <div className="flex flex-col items-center justify-center py-2">
+                <span className="text-3xl font-bold">{(steps * 0.0008).toFixed(1)}</span>
+                <p className="text-xs text-muted-foreground mt-1">km estimated</p>
+              </div>
+            </GlassCard>
+          )}
         </div>
 
         {/* Fat Loss Summary */}

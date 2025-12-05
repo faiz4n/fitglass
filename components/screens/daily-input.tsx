@@ -271,41 +271,43 @@ export function DailyInput() {
         </GlassCard>
 
         {/* HIIT Toggle */}
-        <GlassCard
-          variant={hiit ? "highlight" : "default"}
-          className={cn("cursor-pointer transition-all", hiit && "animate-pulse-soft")}
-          onClick={() => setHiit(!hiit)}
-        >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
+        {profile.hiitEnabled && (
+          <GlassCard
+            variant={hiit ? "highlight" : "default"}
+            className={cn("cursor-pointer transition-all", hiit && "animate-pulse-soft")}
+            onClick={() => setHiit(!hiit)}
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div
+                  className={cn(
+                    "p-3 rounded-xl transition-colors border",
+                    hiit ? "bg-primary/30 border-primary/30" : "bg-muted/30 border-border",
+                  )}
+                >
+                  <Zap className={cn("w-6 h-6 transition-colors", hiit ? "text-primary" : "text-muted-foreground")} />
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">{profile.hiitDuration}-Minute HIIT</p>
+                  <p className="font-medium">Did you complete your workout?</p>
+                </div>
+              </div>
               <div
                 className={cn(
-                  "p-3 rounded-xl transition-colors border",
-                  hiit ? "bg-primary/30 border-primary/30" : "bg-muted/30 border-border",
+                  "w-14 h-8 rounded-full p-1 transition-all duration-300 border",
+                  hiit ? "bg-primary border-primary/50" : "bg-muted/50 border-border",
                 )}
               >
-                <Zap className={cn("w-6 h-6 transition-colors", hiit ? "text-primary" : "text-muted-foreground")} />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">5-Minute HIIT</p>
-                <p className="font-medium">Did you complete your workout?</p>
+                <div
+                  className={cn(
+                    "w-6 h-6 rounded-full bg-foreground transition-transform duration-300",
+                    hiit && "translate-x-6",
+                  )}
+                />
               </div>
             </div>
-            <div
-              className={cn(
-                "w-14 h-8 rounded-full p-1 transition-all duration-300 border",
-                hiit ? "bg-primary border-primary/50" : "bg-muted/50 border-border",
-              )}
-            >
-              <div
-                className={cn(
-                  "w-6 h-6 rounded-full bg-foreground transition-transform duration-300",
-                  hiit && "translate-x-6",
-                )}
-              />
-            </div>
-          </div>
-        </GlassCard>
+          </GlassCard>
+        )}
 
         {isMobile && activeInput && (
           <GlassCard variant="strong" className="animate-slide-up">

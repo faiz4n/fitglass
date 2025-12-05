@@ -26,46 +26,46 @@ const accentThemes: Record<
       neonSecondary: "oklch(0.75 0.18 170)",
     },
   },
-  purple: {
+  blue: {
     light: {
-      primary: "oklch(0.5 0.2 280)",
-      accent: "oklch(0.55 0.22 300)",
-      neonPrimary: "oklch(0.55 0.22 280)",
-      neonSecondary: "oklch(0.5 0.2 300)",
+      primary: "oklch(0.55 0.2 250)",
+      accent: "oklch(0.6 0.2 240)",
+      neonPrimary: "oklch(0.5 0.2 250)",
+      neonSecondary: "oklch(0.55 0.18 240)",
     },
     dark: {
-      primary: "oklch(0.7 0.2 280)",
-      accent: "oklch(0.75 0.22 300)",
-      neonPrimary: "oklch(0.8 0.22 280)",
-      neonSecondary: "oklch(0.7 0.2 300)",
+      primary: "oklch(0.7 0.18 250)",
+      accent: "oklch(0.75 0.2 240)",
+      neonPrimary: "oklch(0.8 0.2 250)",
+      neonSecondary: "oklch(0.75 0.18 240)",
     },
   },
-  coral: {
+  rose: {
     light: {
-      primary: "oklch(0.55 0.18 25)",
-      accent: "oklch(0.6 0.2 40)",
-      neonPrimary: "oklch(0.6 0.2 25)",
-      neonSecondary: "oklch(0.55 0.18 40)",
+      primary: "oklch(0.6 0.2 350)",
+      accent: "oklch(0.65 0.2 340)",
+      neonPrimary: "oklch(0.55 0.2 350)",
+      neonSecondary: "oklch(0.6 0.18 340)",
     },
     dark: {
-      primary: "oklch(0.75 0.18 25)",
+      primary: "oklch(0.75 0.18 350)",
+      accent: "oklch(0.8 0.2 340)",
+      neonPrimary: "oklch(0.85 0.2 350)",
+      neonSecondary: "oklch(0.75 0.18 340)",
+    },
+  },
+  orange: {
+    light: {
+      primary: "oklch(0.6 0.18 50)",
+      accent: "oklch(0.65 0.2 40)",
+      neonPrimary: "oklch(0.55 0.2 50)",
+      neonSecondary: "oklch(0.6 0.18 40)",
+    },
+    dark: {
+      primary: "oklch(0.75 0.18 50)",
       accent: "oklch(0.8 0.2 40)",
-      neonPrimary: "oklch(0.85 0.2 25)",
+      neonPrimary: "oklch(0.85 0.2 50)",
       neonSecondary: "oklch(0.75 0.18 40)",
-    },
-  },
-  emerald: {
-    light: {
-      primary: "oklch(0.52 0.17 145)",
-      accent: "oklch(0.58 0.19 155)",
-      neonPrimary: "oklch(0.57 0.19 145)",
-      neonSecondary: "oklch(0.52 0.17 155)",
-    },
-    dark: {
-      primary: "oklch(0.72 0.17 145)",
-      accent: "oklch(0.78 0.19 155)",
-      neonPrimary: "oklch(0.82 0.19 145)",
-      neonSecondary: "oklch(0.72 0.17 155)",
     },
   },
 }

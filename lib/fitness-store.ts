@@ -15,7 +15,7 @@ import {
   subscribeToSettings,
 } from "./firestore-sync"
 
-export type AccentTheme = "teal" | "purple" | "coral" | "emerald"
+export type AccentTheme = "teal" | "blue" | "rose" | "orange"
 export type ColorMode = "light" | "dark"
 
 export interface DailyLog {
@@ -30,6 +30,7 @@ export interface DailyLog {
 
 export interface UserProfile {
   name: string
+  gender: "male" | "female"
   age: number
   height: number
   weight: number
@@ -39,6 +40,9 @@ export interface UserProfile {
   calorieGoal: number
   stepGoal: number
   tdee: number
+  activityLevel: "sedentary" | "light" | "moderate" | "active"
+  hiitEnabled: boolean
+  hiitDuration: number
 }
 
 interface FitnessState {
@@ -81,6 +85,7 @@ const getDateString = () => new Date().toISOString().split("T")[0]
 
 const defaultProfile: UserProfile = {
   name: "",
+  gender: "male",
   age: 25,
   height: 175,
   weight: 75,
@@ -90,6 +95,9 @@ const defaultProfile: UserProfile = {
   calorieGoal: 1400,
   stepGoal: 6000,
   tdee: 1950,
+  activityLevel: "sedentary",
+  hiitEnabled: false,
+  hiitDuration: 15,
 }
 
 const calculateScore = (log: Partial<DailyLog>, profile: UserProfile): number => {
@@ -107,12 +115,13 @@ const calculateScore = (log: Partial<DailyLog>, profile: UserProfile): number =>
     else score += Math.max(0, 30 - Math.floor((calories - calorieTarget) / 50) * 5)
   }
 
-  // Steps score (10 points max)
-  if ((log.steps || 0) >= profile.stepGoal) score += 10
-  else score += Math.floor(((log.steps || 0) / profile.stepGoal) * 10)
+  // Steps score (20 points max normally, 30 if HIIT disabled)
+  const stepWeight = profile.hiitEnabled ? 20 : 30
+  if ((log.steps || 0) >= profile.stepGoal) score += stepWeight
+  else score += Math.floor(((log.steps || 0) / profile.stepGoal) * stepWeight)
 
   // HIIT score (10 points)
-  if (log.hiit) score += 10
+  if (profile.hiitEnabled && log.hiit) score += 10
 
   return Math.min(100, score)
 }
@@ -130,8 +139,8 @@ export const useFitnessStore = create<FitnessState>()(
       profile: defaultProfile,
       logs: [],
       currentView: "home",
-      accentTheme: "teal",
-      colorMode: "dark",
+      accentTheme: "blue",
+      colorMode: "light",
       selectedDate: getDateString(),
       userId: null,
       isSyncing: false,
@@ -302,7 +311,7 @@ export const useFitnessStore = create<FitnessState>()(
             profile: profile || defaultProfile,
             isOnboarded: settings?.isOnboarded ?? false,
             accentTheme: settings?.accentTheme ?? "teal",
-            colorMode: settings?.colorMode ?? "dark",
+            colorMode: settings?.colorMode ?? "light",
             logs: logs || [],
             userId,
           })
