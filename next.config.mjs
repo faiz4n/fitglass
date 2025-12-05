@@ -1,3 +1,12 @@
+import withPWAInit from "next-pwa";
+
+const withPWA = withPWAInit({
+  dest: "public",
+  register: true,
+  skipWaiting: true,
+  disable: process.env.NODE_ENV === "development",
+});
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   typescript: {
@@ -6,7 +15,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
- 
-}
+};
 
-export default nextConfig
+const isDev = process.env.NODE_ENV === "development";
+
+export default isDev ? nextConfig : withPWA(nextConfig);

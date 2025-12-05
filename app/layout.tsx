@@ -11,6 +11,10 @@ export const metadata: Metadata = {
   title: "FitGlass - Premium Fitness Tracker",
   description: "Track your calories, protein, steps, and fat loss progress with a beautiful glassmorphism interface",
   generator: "v0.app",
+  icons: {
+    icon: "/icon.png",
+    apple: "/icon.png",
+  },
 }
 
 export const viewport: Viewport = {
